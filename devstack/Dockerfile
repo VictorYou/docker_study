@@ -8,7 +8,7 @@ ENV STACK_HOME /opt/stack
 # install dependencies
 RUN apt-get update
 RUN apt-get install -y sudo git net-tools
-RUN apt-get install -y dnsutils inetutils-ping curl wget vim
+RUN apt-get install -y dnsutils inetutils-ping curl wget vim livecd-rootfs
 
 # devstack installation preparation
 RUN useradd -s /bin/bash -d ${STACK_HOME} -m stack
