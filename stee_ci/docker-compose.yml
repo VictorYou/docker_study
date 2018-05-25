@@ -1,8 +1,8 @@
 version: '3'
 services:
-  stee_docker_neve:
-    image: stee_docker:2.0
+  stee_docker_ci:
+    image: stee_docker:3.0
     volumes:
       -  /home/viyou/NeVe_TA_RF:/home/tauser/NeVe_TA_RF/
     ports:
-      - "6900-6910:5900-5910"
+      - 6900-6910:5900-5910

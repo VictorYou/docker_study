@@ -5,4 +5,4 @@ services:
     volumes:
       -  /home/viyou/NeVe_TA_RF:/home/tauser/NeVe_TA_RF/
     ports:
-      - "7900-7910:5900-5910"
+      - "6900-6910:5900-5910"
