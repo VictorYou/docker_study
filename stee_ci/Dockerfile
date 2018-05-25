@@ -13,6 +13,6 @@ RUN mkdir $HOME/.vnc \
     && /bin/echo -e "arthur\narthur" | vncpasswd $HOME/.vnc/passwd \
     && chmod 600 $HOME/.vnc/passwd
 
-RUN /bin/echo -e "#!/bin/bash\nvncserver -geometry 1600x1200 -ZlibLevel=9 -AlwaysShared=on\nsupervisord -n" > start.sh && chmod u+x start.sh
+RUN /bin/echo -e "#!/bin/bash\nvncserver -geometry 1600x1200 -ZlibLevel=9 -AlwaysShared=on\nsupervisord -n" > /root/start.sh && chmod u+x /root/start.sh
 
-CMD ["/start.sh"]
+CMD ["/root/start.sh"]
