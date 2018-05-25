@@ -1,6 +1,7 @@
 version: '3'
 services:
   stee_docker_ci:
+    container_name: stee_docker
     image: stee_docker:3.0
     volumes:
       -  /home/viyou/NeVe_TA_RF:/home/tauser/NeVe_TA_RF/
