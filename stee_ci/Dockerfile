@@ -15,4 +15,4 @@ RUN mkdir $HOME/.vnc \
 
 RUN /bin/echo -e "#!/bin/bash\nvncserver -geometry 1600x1200 -ZlibLevel=9 -AlwaysShared=on\nsupervisord -n" > start.sh && chmod u+x start.sh
 
-ENTRYPOINT ["/start.sh"]
+CMD ["/start.sh"]
