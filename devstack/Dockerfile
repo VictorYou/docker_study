@@ -5,10 +5,11 @@ ENV http_proxy=${http_proxy} \
     https_proxy=${https_proxy} \
     no_proxy=localhost,127.0.1.1,127.0.0.1,172.17.0.2
 ENV STACK_HOME /opt/stack    
+ENV DEBIAN_FRONTEND noninteractive
 
 # install dependencies
 RUN apt-get update \
-    && apt-get install -y sudo git net-tools dnsutils inetutils-ping curl wget vim locales software-properties-common mysql-server
+    && apt-get install -y sudo git net-tools dnsutils inetutils-ping curl wget vim locales software-properties-common apparmor
 
 RUN add-apt-repository -y cloud-archive:queens \
     && apt-get install -y ubuntu-cloud-keyring  \
@@ -27,6 +28,18 @@ RUN echo "stack ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/stack \
 RUN cd ${STACK_HOME} && su -l stack -c "git clone https://git.openstack.org/openstack-dev/devstack ${STACK_HOME}/devstack"
 RUN cd ${STACK_HOME} && su -l stack -c "sed -i 's@git://git.openstack.org@https://www.github.com@g' ${STACK_HOME}/devstack/stackrc"
 COPY local.conf ${STACK_HOME}/devstack
+
+RUN /etc/init.d/apparmor stop \
+    && /etc/init.d/apparmor teardown \
+    && update-rc.d -f apparmor remove
+
+RUN echo debconf mysql-server/root_password password secret | debconf-set-selections \
+    && echo debconf mysql-server/root_password_again password secret | debconf-set-selections \
+    && apt-get -qq install mysql-server
+
+RUN /etc/init.d/apparmor stop \
+    && /etc/init.d/apparmor teardown \
+    && update-rc.d -f apparmor remove
 
 # install devstack
 #RUN cd ${STACK_HOME} && su -l stack -c "cd devstack && ./stack.sh"
