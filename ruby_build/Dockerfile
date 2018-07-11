@@ -7,4 +7,4 @@ ENV http_proxy=${http_proxy} \
 # install dependencies
 RUN apt-get update
 RUN apt-get install -y ruby ruby-dev zlib1g-dev gcc make git
-RUN gem install rspec xml-mapping nokogiri
+RUN gem install rspec xml-mapping nokogiri mocha
