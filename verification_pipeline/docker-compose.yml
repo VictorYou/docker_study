@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  jenkins-master:
+    image: archive.docker-registry.eecloud.nsn-net.net/netact_verification_pipeline/jenkins-master
+    restart: unless-stopped
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-log:/var/log/jenkins
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    environment:
+      JAVA_OPTS: "-Dhttp.proxyHost=10.144.1.10 -Dhttp.proxyPort=8080 -Dhttps.proxyHost=10.144.1.10 -Dhttps.proxyPort=8080 -Djenkins.install.runSetupWizard=false -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Helsinki -Dhudson.model.DirectoryBrowserSupport.CSP="
+    networks:
+      - jenkins-net
+
+  jenkins-nginx:
+    image: archive.docker-registry.eecloud.nsn-net.net/netact_verification_pipeline/jenkins-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    links:
+      - jenkins-master:jenkins-master
+    networks:
+      - jenkins-net
+
+volumes:
+  jenkins-data:
+    external: true
+  jenkins-log:
+
+networks:
+  jenkins-net:
+
+
