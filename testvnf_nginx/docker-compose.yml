@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:1.0
+    volumes:
+      -  /home/viyou/NeVe_TA_RF:/home/tauser/NeVe_TA_RF/
+    ports:
+      - 6900-6910:5900-5910
